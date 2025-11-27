@@ -1,0 +1,883 @@
+.<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Luxury Collection</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fefefe;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Color Palette */
+        :root {
+            --gold: #D4AF37;
+            --dark-gold: #B8860B;
+            --charcoal: #2C2C2C;
+            --light-cream: #F8F4F0;
+            --white: #FFFFFF;
+            --border-light: rgba(212, 175, 55, 0.2);
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--white);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Hero Section */
+        .shop-hero {
+            height: 60vh;
+            background: linear-gradient(135deg, rgba(44,44,44,0.9) 0%, rgba(44,44,44,0.7) 100%), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%232C2C2C" width="1200" height="800"/><path fill="%23D4AF37" fill-opacity="0.1" d="M0,0Q120,240,240,400T480,800T720,400T960,0Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            margin-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        /* Products Grid */
+        .products-section {
+            padding: 5rem 2rem;
+            background: var(--light-cream);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .product-media {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .media-toggle {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s ease;
+        }
+
+        .media-toggle:hover {
+            background: var(--dark-gold);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--gold);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+        }
+
+        .product-category {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            background: var(--light-cream);
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            color: var(--charcoal);
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            color: var(--charcoal);
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: background 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: var(--dark-gold);
+        }
+
+        /* Order Form Section */
+        .order-section {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .order-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--light-cream);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .order-form h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--charcoal);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .cart-summary {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-top: 1rem;
+        }
+
+        .submit-order {
+            width: 100%;
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-order:hover {
+            background: var(--dark-gold);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--charcoal);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-column h4 {
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .order-container {
+                padding: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .quantity-selector {
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">TACE FASHION<span>.</span></a>
+            <ul class="nav-links">
+                <li></li>
+                <li><a href="about3.html">About us</a></li>
+                <li><a href="#" style="color: var(--gold);">Shop</a></li>
+                <li><a href="#">Collections</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="shop-hero">
+        <div class="hero-content fade-in">
+            <h1>TACE COLLECTION</h1>
+            <p>Timeless Elegance, Uncompromising Quality</p>
+            <p><a href="index.html">Home</a></p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Exclusive Collection</h2>
+                <p>Discover our handcrafted luxury items</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card reveal">
+                    <div class="product-media">
+                        <img src="" 
+                             alt="Luxury Watch" class="product-image">
+                        <video class="product-video" loop muted>
+                            <source src="" type="video/mp4">
+                        </video>
+                        <button class="media-toggle" onclick="toggleMedia(this)">Watch Video</button>
+                        <div class="product-badge">Bestseller</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Heritage Chronograph</h3>
+                        <div class="product-category">LUXURY WATCHES</div>
+                        <p class="product-description">Handcrafted Swiss timepiece with sapphire crystal and genuine leather strap. Water resistant to 100m.</p>
+                        <div class="product-price">850</div>
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
+                                <input type="text" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card reveal">
+                    <div class="product-media">
+                        <img src="" 
+                             alt="Leather Bag" class="product-image">
+                        <video class="product-video" loop muted>
+                            <source src=".mp4" type="video/mp4">
+                        </video>
+                        <button class="media-toggle" onclick="toggleMedia(this)">Watch Video</button>
+                        <div class="product-badge">New</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Artisan Leather Bag</h3>
+                        <div class="product-category">LEATHER GOODS</div>
+                        <p class="product-description">Full-grain leather briefcase with brass hardware and multiple compartments. Hand-stitched details.</p>
+                        <div class="product-price">250</div>
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
+                                <input type="text" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card reveal">
+                    <div class="product-media">
+                        <img src="" 
+                             alt="Gold Jewelry" class="product-image">
+                        <video class="product-video" loop muted>
+                            <source src=".mp4" type="video/mp4">
+                        </video>
+                        <button class="media-toggle" onclick="toggleMedia(this)">Watch Video</button>
+                        <div class="product-badge">Limited</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Eternal Gold Necklace</h3>
+                        <div class="product-category">FINE JEWELRY</div>
+                        <p class="product-description">18k gold necklace with diamond accents. Handcrafted by master jewelers with lifetime warranty.</p>
+                        <div class="product-price">450</div>
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
+                                <input type="text" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section class="order-section">
+        <div class="container">
+            <div class="order-container reveal">
+                <form class="order-form" id="orderForm">
+                    <h3>Complete Your Order</h3>
+                    
+                    <div class="cart-summary">
+                        <h4>Your Selection</h4>
+                        <div id="cartItems">
+                            <!-- Cart items will be dynamically added here -->
+                            <div class="cart-empty">No items selected yet</div>
+                        </div>
+                        <div class="cart-total">
+                            Total: $<span id="totalAmount">0</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemsNeeded">Items You Need</label>
+                        <textarea id="itemsNeeded" rows="4" placeholder="Please describe the items you're interested in, including any specific requirements..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerName">Full Name</label>
+                        <input type="text" id="customerName" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerEmail">Email Address</label>
+                        <input type="email" id="customerEmail" required placeholder="Enter your email for delivery updates">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">Phone Number</label>
+                        <input type="tel" id="customerPhone" placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deliveryAddress">Delivery Address</label>
+                        <textarea id="deliveryAddress" rows="3" required placeholder="Enter your complete delivery address"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-order">PLACE ORDER</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>LUXURY</h4>
+                <p style="color: #ccc; line-height: 1.6;">Creating exceptional pieces that celebrate craftsmanship and timeless beauty since 1985.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">All Collections</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Bestsellers</a></li>
+                    <li><a href="#">Limited Edition</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Customer Care</h4>
+                <ul>
+                    <li><a href="#">Shipping & Delivery</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">Product Care</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Via Montenapoleone 18</li>
+                    <li>Ngong road, Nairobi</li>
+                    <li>+39 02 123 4567</li>
+                    <li>Tevin Mulinge52@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2024 Tace fashion. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+        let totalAmount = 0;
+
+        // Toggle between image and video
+        function toggleMedia(button) {
+            const mediaContainer = button.parentElement;
+            const image = mediaContainer.querySelector('.product-image');
+            const video = mediaContainer.querySelector('.product-video');
+            
+            if (image.style.display !== 'none') {
+                image.style.display = 'none';
+                video.style.display = 'block';
+                video.play();
+                button.textContent = 'View Image';
+            } else {
+                video.style.display = 'none';
+                image.style.display = 'block';
+                video.pause();
+                button.textContent = 'Watch Video';
+            }
+        }
+
+        // Quantity controls
+        function increaseQuantity(button) {
+            const quantityInput = button.parentElement.querySelector('.quantity-input');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+
+        function decreaseQuantity(button) {
+            const quantityInput = button.parentElement.querySelector('.quantity-input');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+
+        // Add to cart functionality
+        function addToCart(button) {
+            const productCard = button.closest('.product-card');
+            const productName = productCard.querySelector('h3').textContent;
+            const productPrice = parseFloat(productCard.querySelector('.product-price').textContent.replace('$', '').replace(',', ''));
+            const quantity = parseInt(productCard.querySelector('.quantity-input').value);
+            
+            const existingItem = cart.find(item => item.name === productName);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    name: productName,
+                    price: productPrice,
+                    quantity: quantity
+                });
+            }
+            
+            updateCartDisplay();
+            showNotification(`${productName} added to cart!`);
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const totalAmountElement = document.getElementById('totalAmount');
+            
+            cartItems.innerHTML = '';
+            totalAmount = 0;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="cart-empty">No items selected yet</div>';
+            } else {
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    totalAmount += itemTotal;
+                    
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <span>${item.name} (x${item.quantity})</span>
+                        <span>$${itemTotal.toLocaleString()}</span>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+            }
+            
+            totalAmountElement.textContent = totalAmount.toLocaleString();
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--gold);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Form submission
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                alert('Please add items to your cart before placing an order.');
+                return;
+            }
+            
+            const formData = {
+                items: cart,
+                customRequest: document.getElementById('itemsNeeded').value,
+                customerName: document.getElementById('customerName').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                deliveryAddress: document.getElementById('deliveryAddress').value,
+                totalAmount: totalAmount
+            };
+            
+            // Here you would typically send this data to your server
+            console.log('Order submitted:', formData);
+            
+            // Show success message
+            alert('Thank you for your order! We will contact you shortly to confirm delivery details.');
+            
+            // Reset form and cart
+            this.reset();
+            cart = [];
+            updateCartDisplay();
+        });
+
+        // Scroll animations
+        window.addEventListener('scroll', reveal);
+
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        // Initial call
+        reveal();
+    </script>
+</body>
+</html>
